@@ -1,0 +1,138 @@
+<div class="main-content">
+  <div class="section-content section-content-p30">
+    <div class="container-fluid">
+      <div *ngIf="cartItems.length > 0">
+        <table class="table table-bordered">
+          <tr style="text-align: center">
+            <th width="20%">
+              <i class="fa-solid fa-coffee fa-2xl">Məhsulun şəkli</i>
+            </th>
+            <th width="50%"><i class="fa-solid fa-coffee fa-2xl"></i></th>
+            <th width="30%"></th>
+            <th width="10%"></th>
+          </tr>
+          <tr *ngFor="let item of cartItems">
+            <td>
+              <img
+                alt=""
+                src="{{ item.imageUrl }}"
+                class="img-responsive"
+                width="150px"
+              />
+            </td>
+            <td>
+              <div class="items">
+                <p style="color: red">
+                  <i class="fa-solid fa-coffee fa-2xl">{{ item.name }}</i>
+                </p>
+                <p style="color: red">
+                  <i class="fa-solid fa-coffee fa-2xl"
+                    >Qiymət: {{ item.unitPrice | currency : "USD" }}</i
+                  >
+                </p>
+              </div>
+            </td>
+            <td>
+              <div class="items">
+                <div class="row no-gutters">
+                  <label style="color: red">
+                    <i class="fa-solid fa-coffee fa-2xl">Say:</i>
+                  </label>
+                  <div class="col">
+                    <div></div>
+                    <button
+                      (click)="incrementQuantity(item)"
+                      class="btn btn-primary btn-sm"
+                      style="margin-right: 5px"
+                    >
+                      <i class="fas fa-plus">+</i>
+                    </button>
+                    <label style="color: red">{{ item.quantity }}</label>
+                    <button
+                      (click)="decrementQuantity(item)"
+                      class="btn btn-primary btn-sm"
+                      style="margin-left: 5px"
+                    >
+                      <i class="fas fa-minus">-</i>
+                    </button>
+                  </div>
+
+                  <p class="mt-2" style="color: red">
+                    <i class="fa-solid fa-coffee fa-2xl">
+                      Toplam qiymət:
+                      {{ item.quantity * item.unitPrice | currency : "USD" }}
+                    </i>
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="col">
+                <button (click)="remove(item)" class="btn btn-primary">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="25"
+                    height="25"
+                    fill="currentColor"
+                    class="bi bi-trash3-fill"
+                    viewBox="0 0 15 15"
+                  >
+                    <path
+                      d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2"></td>
+            <td style="font-weight: bold">
+              <p style="color: red">
+                <i class="fa-solid fa-coffee fa-2xl">
+                  Yekun qiymət: {{ totalPrice }}</i
+                >
+              </p>
+              <p style="color: red">
+                <i class="fa-solid fa-coffee fa-2xl">
+                  Yekun say: {{ totalQuantity }}</i
+                >
+              </p>
+              <p style="color: red">
+                <i class="fa-solid fa-coffee fa-2xl"> Çatdırılma: Pulsuz</i>
+              </p>
+              <a routerLink="/checkout" class="btn btn-info" style="margin-left: 10px;">
+                <i class="fa-solid fa-coffee fa-2xl"> Ödəniş et</i></a
+              >
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div
+        *ngIf="cartItems.length == 0"
+        class="alert alert-warning"
+        role="alert"
+      >
+        <p style="text-align: center; font-weight: bold">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="currentColor"
+            class="bi bi-exclamation-diamond-fill"
+            viewBox="0 0 16 16"
+            style="color: red; margin-right: 5px"
+          >
+            <path
+              d="M9.05.435c-.58-.58-1.52-.58-2.1 0L.436 6.95c-.58.58-.58 1.519 0 2.098l6.516 6.516c.58.58 1.519.58 2.098 0l6.516-6.516c.58-.58.58-1.519 0-2.098L9.05.435zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+            />
+          </svg>
+          <i class="fa-solid fa-coffee fa-2xl">
+            Alış-veriş səbətinizdə məhsul tapılmadı.</i
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

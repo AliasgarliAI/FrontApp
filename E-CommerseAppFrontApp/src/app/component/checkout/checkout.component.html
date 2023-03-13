@@ -1,0 +1,255 @@
+<div class="main-content page-m">
+    <div class="section-content section-container-p30">
+        <div class="container-fluid">
+            <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
+                <!-- musteri melumatlari -->
+                <div formGroupName="customer" class="form-area">
+                    <h3>Müştəri məlumatları</h3>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Ad</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName ="firstName" type="text" placeholder="Adinizi daxil edin">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Soyad</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName ="lastName" type="text" placeholder="Soyadinizi daxil edin">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Email</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName ="email" type="text" placeholder="email@email.com">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--shipping adress melumatlari -->
+                <div formGroupName="shippingAddress" class="form-area">
+                    <h3>Çatdırılma ünvanı</h3>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Ölkə</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                             <select formControlName="country" (change)="getCityByCountry('shippingAddress')">
+                                <option *ngFor="let country of countries" [ngValue]="country">
+                                    {{country.countryName}}
+                                </option>
+                             </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Şəhər</label>
+                        </div>
+                        <div class="col-md-9">`
+                            <div class="input-space">
+                                <select formControlName="city">
+                                    <option *ngFor="let city of shippingAddressCities" [ngValue]="city">
+                                        {{city.cityName}}
+                                    </option>
+                                 </select>
+                               </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Adress</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName ="street" type="text" placeholder="Aressinizi daxil edin">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Zip kod</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName ="zipCode" type="text" placeholder="Zip kodu daxil edin">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-space">
+                    <label class="au-checkbox">
+                        <input type="checkbox" (change)="copyShippingAdressToBilling($event)">
+                        <span class="au-checkmark"></span>Çatdırılma adressi faktura adresi ilə eynidiir
+                    </label>
+                </div>
+                <!-- billing address melumatlari -->
+                <div formGroupName="billingAddress" class="form-area">
+                    <h3>Faktura ünvanı</h3>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Ölkə</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                             <select formControlName="country" (change)="getCityByCountry('billingAddress')">
+                                <option *ngFor="let country of countries" [ngValue]="country">
+                                    {{country.countryName}}
+                                </option>
+                             </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Şəhər</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <select formControlName="city">
+                                    <option *ngFor="let city of billingAddressCities" [ngValue]="city">
+                                        {{city.cityName}}
+                                    </option>
+                                 </select>
+                               </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Adress</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName ="street" type="text" placeholder="Aressinizi daxil edin">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Zip kod</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName ="zipCode" type="text" placeholder="Zip kodu daxil edin">
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                
+                <!-- kart melumatlari -->
+                <div formGroupName="creditType" class="form-area">
+                    <h3>Kart məlumatları</h3>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Kart növü</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <select formControlName="cardType">
+                                    <option> Visa </option>
+                                    <option> Mastercard </option>
+                                    <option> Maestro </option>
+                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Kart sahibi (Ad,Soyad)</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName ="cardHolder" type="text" placeholder="Ad və soyad daxil edin">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Etibarlılıq tarixi (il)</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                             <select formControlName="expirationYear" (change)="handleMonthAndYears()">
+                                <option *ngFor="let year of creditCardYears">
+                                    {{year}}
+                                </option>
+                             </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Etibarlılıq tarixi (ay)</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <select formControlName="expirationMonth">
+                                    <option *ngFor="let month of creditCardMonth">
+                                        {{month}}
+                                    </option>
+                                 </select>
+                               </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Kart nömrəsi (PAN)</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName ="cardNumber" type="text" placeholder="xxxx xxxx xxxx xxxx">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Təhlükəsizlik kodu(CVV)</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName ="securityCode" type="text" placeholder="xxx">
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                
+                <!-- Sifaris detallari -->
+                <div class="form-area">
+                    <h3>Sifariş detalları</h3>
+
+                    <p>Say: {{totalQuantity}}</p>
+                    <p>Çatdırılma: Pulsuz</p>
+                    <p>Yekun ödəniləcək məbləğ: {{totalPrice}}</p>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-info" type="submit">Ödəniş et</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
